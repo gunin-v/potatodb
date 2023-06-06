@@ -18,22 +18,10 @@ interface IProps {
 
 export const PricesTable = ({ prices }: IProps) => {
   const { pricesByStore, getChartData } = usePrices(prices);
-  return Object.keys(pricesByStore).map((item) => {
-    const values = getChartData(pricesByStore[item]);
 
-    console.log(values);
-    const data = [
-      {
-        date: 'Page A',
-        x: 4000,
-        y: 2400,
-      },
-      {
-        date: 'Page B',
-        x: 3000,
-        y: 1398,
-      },
-    ];
+  return Object.keys(pricesByStore).map((item) => {
+    const { data, productsList } = getChartData(pricesByStore[item]);
+
     return (
       <div className={styles.chart} key={item}>
         <h2>{item}</h2>
@@ -44,12 +32,18 @@ export const PricesTable = ({ prices }: IProps) => {
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
+          <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="x" stroke="#8884d8" />
-          <Line type="monotone" dataKey="y" stroke="#82ca9d" />
+          {productsList.map((product) => (
+            <Line
+              key={product.name}
+              type="monotone"
+              dataKey={product.name}
+              stroke={product.color}
+            />
+          ))}
         </LineChart>
       </div>
     );
