@@ -1,6 +1,4 @@
 import { Price } from '@/types';
-
-import styles from './PricesTable.module.scss';
 import { usePrices } from '@/features/PricesTable/hooks/usePriceData';
 import {
   CartesianGrid,
@@ -23,11 +21,11 @@ export const PricesTable = ({ prices }: IProps) => {
     const { data, productsList } = getChartData(pricesByStore[item]);
 
     return (
-      <div className={styles.chart} key={item}>
+      <div key={item}>
         <h2>{item}</h2>
         <LineChart
-          width={730}
-          height={250}
+          width={1200}
+          height={400}
           data={data}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
@@ -40,6 +38,7 @@ export const PricesTable = ({ prices }: IProps) => {
             <Line
               key={product.name}
               type="monotone"
+              strokeWidth={3}
               dataKey={product.name}
               stroke={product.color}
             />
